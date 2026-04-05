@@ -1,6 +1,6 @@
-# Step 1: Sign Up for Databricks Community Edition
+# Step 1: Sign Up & Log In to Databricks
 
-Databricks Community Edition is a **free**, no-credit-card-required version of Databricks with a single-node cluster and built-in MLflow support.
+Databricks **Free Edition** is a full-featured Databricks workspace available at no cost. It includes Compute, Catalog, Git Folders, MLflow, and more.
 
 ---
 
@@ -8,48 +8,45 @@ Databricks Community Edition is a **free**, no-credit-card-required version of D
 
 ### 1.1 Go to the Sign-Up Page
 
-- Open [https://community.cloud.databricks.com/login.html](https://community.cloud.databricks.com/login.html)
+- Open [https://www.databricks.com/try-databricks](https://www.databricks.com/try-databricks)
 
 ### 1.2 Create Your Account
 
-1. Click **"Sign Up"** (below the login form)
-2. Fill in your details:
-   - First name, Last name
-   - Email address
-   - Company (can be anything, e.g., "Personal")
-   - Title (optional)
-3. Click **"Sign Up"**
+1. Click **"Get started for free"**
+2. Sign up with your **university or work email** — this qualifies you for Free Edition
+3. Fill in your details (name, email, etc.)
+4. Click **"Sign Up"**
 
-### 1.3 Verify Your Email
+### 1.3 Verify Your Email & Log In
 
 1. Check your inbox for a verification email from Databricks
-2. Click the verification link
-3. Set your password
+2. Click the verification link and set your password
+3. Log in at the URL provided (your workspace URL)
 
-### 1.4 Select Community Edition
+### 1.4 Explore the Home Page
 
-- On the cloud provider selection screen, you may see options for AWS, Azure, GCP
-- At the bottom, click **"Get started with Community Edition"**
-- This is the free tier — no cloud provider account needed
+After logging in, you'll see the Databricks home page with:
 
-### 1.5 Log In
-
-- Go to [https://community.cloud.databricks.com](https://community.cloud.databricks.com)
-- Sign in with your email and password
-- You should see the Databricks landing page with sidebar options
+- **Sidebar:** Workspace, Catalog, Compute, Jobs & Pipelines, AI/ML, SQL, etc.
+- **"Bring in data"** — upload datasets to DBFS
+- **"Connect to a GitHub repo"** — link your Git repositories
+- **"Invite your friends"** — share the workspace
 
 ---
 
-## What You Get
+## What You Get with Free Edition
 
-| Feature | Community Edition |
+| Feature | Available |
 |---|---|
-| **Clusters** | 1 single-node cluster (auto-terminates after 2 hours idle) |
+| **Compute Clusters** | Single-node clusters |
 | **Notebooks** | Unlimited Python/Scala/SQL/R notebooks |
-| **MLflow** | Full experiment tracking, model logging |
-| **DBFS** | File storage for datasets |
-| **Model Registry** | Limited (logging only, no stage transitions) |
-| **Git Integration** | Not available (import notebooks manually) |
+| **Unity Catalog** | Browse & manage data |
+| **MLflow Tracking** | Full experiment tracking |
+| **MLflow Model Registry** | Model versioning & registration |
+| **Git Folders** | Connect GitHub/GitLab repos |
+| **Jobs & Pipelines** | Schedule and orchestrate workflows |
+| **Data Ingestion** | Upload files to DBFS |
+| **SQL Editor** | Run SQL queries |
 | **Cost** | $0 — completely free |
 
 ---
