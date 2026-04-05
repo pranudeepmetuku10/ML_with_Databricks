@@ -6,7 +6,7 @@
 # MAGIC tunes hyperparameters with **5-fold cross-validation**, handles class imbalance
 # MAGIC with **SMOTE**, and registers the best model in the **Databricks MLflow** registry.
 # MAGIC
-# MAGIC > **Compatible with Databricks Community Edition (free tier).**
+# MAGIC > **Compatible with Databricks Free Edition.**
 # MAGIC
 # MAGIC **Steps:**
 # MAGIC 1. Load and explore the dataset
@@ -56,16 +56,18 @@ warnings.filterwarnings("ignore")
 # MAGIC
 # MAGIC Upload `fraud_data.csv` to DBFS via the Databricks UI before running this cell.
 # MAGIC
-# MAGIC **How to upload (Community Edition):**
-# MAGIC 1. Click **Data** in the sidebar → **Create Table** → **Upload File**
+# MAGIC **How to upload:**
+# MAGIC 1. Click **"Bring in data"** on the home page (or sidebar → **Data Ingestion**)
 # MAGIC 2. Upload `fraud_data.csv` — it will be stored at `/FileStore/tables/fraud_data.csv`
+# MAGIC
+# MAGIC Alternatively, use the **Catalog** → **Create Table** → **Upload File** flow.
 
 # COMMAND ----------
 
-# Community Edition: load from DBFS (uploaded via UI)
+# Load from DBFS (uploaded via UI)
 df = pd.read_csv("/dbfs/FileStore/tables/fraud_data.csv")
 
-# Alternative: if using full Databricks with Git Folders
+# Alternative: if using Git Folders (connect your repo via sidebar)
 # df = pd.read_csv("fraud_data.csv")
 
 print(f"Dataset shape: {df.shape}")
