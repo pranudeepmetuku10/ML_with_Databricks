@@ -1,6 +1,6 @@
-# Train and Deploy ML Model on Databricks Community Edition
+# Train and Deploy ML Model on Databricks
 
-End-to-end guide for training a machine learning model in **Databricks Community Edition** (free tier) and logging it to the **MLflow** experiment tracker.
+End-to-end guide for training a machine learning model in **Databricks Free Edition** and registering it to the **MLflow** model registry.
 
 > **Use Case:** Credit card fraud detection using a decision-tree classifier with hyperparameter tuning via 5-fold cross-validation.
 
@@ -13,8 +13,8 @@ End-to-end guide for training a machine learning model in **Databricks Community
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Setup Guide](#setup-guide)
-  - [1. Sign Up for Community Edition](#1-sign-up-for-community-edition)
-  - [2. Create a Cluster](#2-create-a-cluster)
+  - [1. Sign Up / Log In](#1-sign-up--log-in)
+  - [2. Create a Compute Cluster](#2-create-a-compute-cluster)
   - [3. Upload the Dataset](#3-upload-the-dataset)
   - [4. Import the Notebook](#4-import-the-notebook)
 - [Training the Model](#training-the-model)
@@ -35,12 +35,12 @@ End-to-end guide for training a machine learning model in **Databricks Community
 
 This project demonstrates how to:
 
-1. **Set up** a Databricks Community Edition workspace (free, no Azure subscription needed)
+1. **Set up** a Databricks Free Edition workspace (no credit card needed)
 2. **Train** a decision-tree fraud classifier with scikit-learn inside a Databricks notebook
 3. **Tune** hyperparameters using 5-fold cross-validation
 4. **Handle class imbalance** with `imbalanced-learn` (SMOTE)
 5. **Track** experiments, parameters, and metrics with MLflow
-6. **Log** the trained model to MLflow for reproducibility
+6. **Register** the trained model in the MLflow Model Registry
 
 ---
 
@@ -48,11 +48,11 @@ This project demonstrates how to:
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│        Databricks Community Edition (Free)            │
+│          Databricks Free Edition                      │
 │                                                      │
 │  ┌────────────────────────┐                          │
 │  │   Compute Cluster       │                          │
-│  │   (Single Node, free)   │                          │
+│  │   (Single Node)         │                          │
 │  └──────────┬─────────────┘                          │
 │             │                                        │
 │  ┌──────────▼─────────────┐                          │
@@ -66,9 +66,9 @@ This project demonstrates how to:
 │  └──────────┬─────────────┘                          │
 │             │                                        │
 │  ┌──────────▼─────────────┐                          │
-│  │  MLflow Experiment       │                          │
-│  │  - Parameters & Metrics  │                          │
-│  │  - Model Artifacts       │                          │
+│  │  MLflow Model Registry  │                          │
+│  │  "credit-card-fraud-    │                          │
+│  │   classifier"           │                          │
 │  └────────────────────────┘                          │
 └──────────────────────────────────────────────────────┘
 ```
@@ -79,8 +79,9 @@ This project demonstrates how to:
 
 | Layer | Technology |
 |---|---|
-| Platform | Databricks Community Edition (free) |
-| ML Tracking | MLflow (built-in) |
+| Platform | Databricks Free Edition |
+| ML Tracking & Registry | MLflow (built-in) |
+| Catalog | Unity Catalog |
 | ML Framework | scikit-learn 1.4.0 |
 | Data Processing | pandas 2.2.2 |
 | Class Imbalance | imbalanced-learn 0.12.3 |
@@ -91,49 +92,51 @@ This project demonstrates how to:
 
 ## Prerequisites
 
-- A free **Databricks Community Edition** account ([sign up here](https://community.cloud.databricks.com/login.html))
+- A **Databricks** account (Free Edition works — sign up with your university/work email)
 - Basic familiarity with Jupyter notebooks and Python ML workflows
-- **No Azure subscription or credit card required**
+- **No paid cloud subscription or credit card required**
 
 ---
 
 ## Setup Guide
 
-### 1. Sign Up for Community Edition
+### 1. Sign Up / Log In
 
-1. Go to [https://community.cloud.databricks.com/login.html](https://community.cloud.databricks.com/login.html)
-2. Click **"Sign Up"** and create a free account
-3. Verify your email and log in
+1. Go to [https://www.databricks.com/try-databricks](https://www.databricks.com/try-databricks)
+2. Sign up with your university or work email to get **Free Edition**
+3. Once logged in, you’ll see the home page with sidebar options: Workspace, Compute, Catalog, etc.
 
-> See [`docs/01-sign-up-community-edition.md`](docs/01-sign-up-community-edition.md) for detailed walkthrough.
+> See [`docs/01-sign-up-and-login.md`](docs/01-sign-up-and-login.md) for detailed walkthrough.
 
-### 2. Create a Cluster
+### 2. Create a Compute Cluster
 
 1. In the sidebar, click **"Compute"**
-2. Click **"Create Cluster"** and configure:
+2. Click **"Create Compute"** and configure:
    - **Cluster name:** `ml-fraud-cluster`
+   - **Cluster Mode:** Single Node
    - **Databricks Runtime:** 14.3 LTS (or latest available)
-   - Community Edition auto-assigns a single-node cluster
-3. Click **"Create Cluster"** — takes ~5 minutes to start
+3. Click **"Create Compute"** — takes ~3–5 minutes to start
 
 > See [`docs/02-create-cluster.md`](docs/02-create-cluster.md) for details.
 
 ### 3. Upload the Dataset
 
 1. Download `fraud_data.csv` from [Kaggle](https://www.kaggle.com/datasets/neharoychoudhury/credit-card-fraud-data)
-2. In the sidebar, click **"Data"** → **"Create Table"** → **"Upload File"**
-3. Drag and drop `fraud_data.csv` — it will be stored at `/FileStore/tables/fraud_data.csv`
+2. On the home page, click **"Bring in data"** (or sidebar → **Data Ingestion**)
+3. Upload `fraud_data.csv` — it will be stored at `/FileStore/tables/fraud_data.csv`
 
 ### 4. Import the Notebook
 
-1. In the sidebar, click **"Workspace"** → navigate to your user folder
-2. Click the **▼** dropdown → **"Import"**
-3. Select **"File"** and upload `notebooks/credit_card_fraud_training.py` from this repo
-4. The file is automatically recognized as a Databricks notebook
+**Option A — Connect your GitHub repo (recommended):**
+1. On the home page, click **"Connect to a GitHub repo"**
+2. Authenticate with GitHub and select this repository
+3. The entire repo is synced into your workspace as a Git Folder
 
-> **Note:** Community Edition does not support Git Folders. Import notebooks manually via file upload.
+**Option B — Manual import:**
+1. Sidebar → **Workspace** → your user folder
+2. Click **▼** → **"Import"** → upload `notebooks/credit_card_fraud_training.py`
 
-> Libraries are installed automatically via `%pip install` in the first cell of the notebook — no manual cluster library setup needed.
+> Libraries are installed automatically via `%pip install` in the first cell — no manual cluster library setup needed.
 
 ---
 
@@ -141,9 +144,13 @@ This project demonstrates how to:
 
 ### Import the Notebook
 
-1. In the sidebar, click **Workspace** → your user folder
+**Option A — Git Folder (recommended):**
+1. Home page → **"Connect to a GitHub repo"** → authenticate and select this repo
+2. Open `notebooks/credit_card_fraud_training.py` from the synced folder
+
+**Option B — Manual import:**
+1. Sidebar → **Workspace** → your user folder
 2. Click **▼** → **"Import"** → upload `notebooks/credit_card_fraud_training.py`
-3. The file is auto-detected as a Databricks Python notebook
 
 ### Run the Notebook
 
@@ -162,13 +169,13 @@ This project demonstrates how to:
 
 ### Registered Models
 
-After notebook execution, verify the model was logged:
+After notebook execution, verify registration:
 
-1. In the sidebar → **Machine Learning** → **Experiments**
-2. Click the experiment → click the run → **Artifacts** tab
-3. Confirm the `model/` artifact exists with `MLmodel`, `model.pkl`, etc.
+1. In the sidebar → **Machine Learning** (or **AI/ML**) → **Models**
+2. Confirm `credit-card-fraud-classifier` appears with a version number
+3. Click on the model to see version history, signature, and source run
 
-> **Note:** Community Edition supports MLflow experiment tracking and model logging. The full Model Registry UI (stage transitions like Staging/Production) requires a paid Databricks tier.
+> **Note:** Free Edition includes the MLflow Model Registry with experiment tracking, model logging, and model versioning.
 
 ### Experiments & Runs
 
@@ -199,7 +206,7 @@ ML_with_Databricks/
 │   └── register_model.py             # Standalone model registration utility
 │
 └── docs/
-    ├── 01-sign-up-community-edition.md
+    ├── 01-sign-up-and-login.md
     ├── 02-create-cluster.md
     └── 03-model-tracking-walkthrough.md
 ```
@@ -221,31 +228,17 @@ The model is trained on the [Kaggle Credit Card Fraud Dataset](https://www.kaggl
 
 ## Next Steps
 
-- **Upgrade to paid Databricks:** To use the full Model Registry (stage transitions), model serving endpoints, and Git Folders, upgrade to a paid Azure/AWS/GCP Databricks workspace
+- **Model Serving:** Create a serving endpoint to expose the model via REST API for real-time predictions
 - **Real-time integration:** Connect the served model to a streaming pipeline (e.g., Kafka, Azure Event Hubs)
 - **CI/CD:** Add GitHub Actions workflows for automated retraining and model promotion
 - **Monitoring:** Set up model drift detection and performance monitoring dashboards
 
 ---
 
-## Community Edition vs Paid — What's Different?
-
-| Feature | Community Edition (Free) | Paid Databricks |
-|---|---|---|
-| Cluster | Single node only | Multi-node, autoscaling |
-| MLflow Tracking | ✅ Full support | ✅ Full support |
-| MLflow Model Registry | ⚠️ Limited (log only) | ✅ Full (staging, production) |
-| Model Serving | ❌ Not available | ✅ REST API endpoints |
-| Git Integration | ❌ Manual import only | ✅ Git Folders / Repos |
-| Library Install | `%pip install` in notebook | Cluster Libraries tab or `%pip` |
-| Auto-termination | 2 hours (fixed) | Configurable |
-
----
-
 ## References
 
-- [Databricks Community Edition](https://community.cloud.databricks.com/)
-- [Databricks Community Edition FAQ](https://www.databricks.com/product/faq/community-edition)
+- [Databricks Free Edition](https://www.databricks.com/try-databricks)
+- [Databricks Documentation](https://docs.databricks.com/)
 - [MLflow Documentation](https://mlflow.org/docs/latest/)
 - [MLflow Tracking Guide](https://mlflow.org/docs/latest/tracking/)
 - [Kaggle Credit Card Fraud Dataset](https://www.kaggle.com/datasets/neharoychoudhury/credit-card-fraud-data)
