@@ -1,17 +1,17 @@
-Steps to run this in Databricks (in order):
+Steps to run this in Databricks Community Edition (in order):
 
-Create Resource Group — follow 01-create-resource-group.md. Name: rg-ml-fraud-detection
+1. Sign up at https://community.cloud.databricks.com — free, no credit card needed
 
-Create Databricks Workspace — follow 02-create-databricks-workspace.md. Use Premium tier (required for MLflow registry)
+2. Create a Cluster — Compute → Create Cluster → name it "ml-fraud-cluster", pick Runtime 14.3 LTS → Create Cluster (wait ~5 min)
 
-Create Compute Cluster — follow 03-create-compute-cluster.md. Single Node, Runtime 14.3 LTS, Standard_DS3_v2
+3. Download the dataset — get fraud_data.csv from https://www.kaggle.com/datasets/neharoychoudhury/credit-card-fraud-data
 
-Install libraries — on the cluster's Libraries tab, install: scikit-learn==1.4.0, pandas==2.2.2, imbalanced-learn==0.12.3, mlflow==2.18.0
+4. Upload the dataset — Data → Create Table → Upload File → drag fraud_data.csv (stored at /FileStore/tables/fraud_data.csv)
 
-Push this repo to GitHub, then in Databricks: Workspace → Create → Git Folder → paste your repo URL
+5. Import the notebook — Workspace → your user folder → ▼ → Import → upload notebooks/credit_card_fraud_training.py from this repo
 
-Download fraud_data.csv from Kaggle and upload it to your Databricks workspace or DBFS
+6. Attach & Run — open the notebook, attach to "ml-fraud-cluster" in the top dropdown, click Run All
 
-Open credit_card_fraud_training.py, attach to your cluster, and Run All cells
+7. Verify — Machine Learning → Experiments → click on the experiment → click the run → check Artifacts tab for the logged model
 
-Verify — go to Machine Learning → Models in the sidebar to confirm credit-card-fraud-classifier is registered. See 04-model-registry-walkthrough.md for details.
+Note: Libraries are installed automatically via %pip install in the first notebook cell — no manual cluster setup needed.
