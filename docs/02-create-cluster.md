@@ -34,10 +34,9 @@ A cluster provides the compute resources to run your notebooks. In Community Edi
 
 ## Important Notes
 
-- **Auto-termination:** Community Edition clusters auto-terminate after **2 hours** of inactivity — this is fixed and cannot be changed
-- **Re-create:** If the cluster is terminated, you need to restart it (click the play button) or create a new one
-- **One cluster at a time:** Community Edition allows only 1 active cluster
-- **No Libraries tab:** Install packages using `%pip install` directly in your notebook (already included in the training notebook's first cell)
+- **Auto-termination:** Clusters auto-terminate after a period of inactivity to save resources
+- **Restart:** If the cluster is terminated, click the play button to restart it
+- **Libraries:** Install packages using `%pip install` in your notebook (already included in the training notebook’s first cell), or use the cluster’s **Libraries** tab
 
 ---
 
@@ -66,4 +65,4 @@ print(f"mlflow:   {mlflow.__version__}")
 1. **Upload your dataset** — see the README's [Upload the Dataset](#3-upload-the-dataset) section
 2. **Import the notebook** — see the README's [Import the Notebook](#4-import-the-notebook) section
 3. **Run the notebook** — attach to `ml-fraud-cluster` and click Run All
-4. After running, see [03 — Model Tracking Walkthrough](03-model-tracking-walkthrough.md)
+2. After running, see [03 — Model Tracking Walkthrough](03-model-tracking-walkthrough.md)

@@ -1,12 +1,12 @@
 # Step 3: Model Tracking Walkthrough
 
-After running the training notebook, your model and metrics are logged to **MLflow Experiments** inside Databricks Community Edition.
+After running the training notebook, your model and metrics are logged to **MLflow** inside Databricks.
 
 ---
 
 ## 3.1 View Experiments & Runs
 
-1. In the Databricks sidebar, click **"Machine Learning"** (or switch to the ML persona via the dropdown at top-left)
+1. In the Databricks sidebar, click **"Machine Learning"** (or **"AI/ML"**)
 2. Click **"Experiments"** in the sidebar
 3. Find the experiment associated with your notebook (named after the notebook path)
 4. Click on it to see a list of runs
@@ -80,7 +80,20 @@ To get the run ID:
 
 ---
 
-## 3.4 Community Edition Limitations
+## 3.4 View Registered Models
+
+Free Edition includes the MLflow Model Registry:
+
+1. Sidebar → **Machine Learning** (or **AI/ML**) → **Models**
+2. Find **`credit-card-fraud-classifier`** in the list
+3. Click on it to see:
+   - **Version history** — each training run creates a new version
+   - **Version details** — input/output schema, creation timestamp
+   - **Source run** — link back to the experiment run
+
+---
+
+## 3.5 Registered Model Features
 
 | Feature | Available? | Notes |
 |---|---|---|
@@ -88,8 +101,8 @@ To get the run ID:
 | View Experiments | ✅ Yes | Sidebar → Machine Learning → Experiments |
 | Compare Runs | ✅ Yes | Select multiple runs → Compare |
 | Load Model | ✅ Yes | Use `mlflow.sklearn.load_model()` |
-| Model Registry (sidebar) | ⚠️ Limited | Models are logged but the full registry UI with stage transitions (Staging/Production) requires paid Databricks |
-| Model Serving | ❌ No | REST API serving endpoints require paid Databricks |
+| Model Registry | ✅ Yes | Sidebar → Machine Learning → Models |
+| Model Versioning | ✅ Yes | Each run registers a new version |
 
 ---
 
@@ -104,8 +117,8 @@ To get the run ID:
 
 ---
 
-## Next Steps (if upgrading later)
+## Next Steps
 
-- **Model Registry:** Upgrade to paid Databricks for full Model Registry with Staging → Production transitions
-- **Model Serving:** Create REST API endpoints for real-time inference
-- **Scheduled Jobs:** Automate retraining on a schedule with Databricks Jobs
+- **Model Serving:** Create a serving endpoint to expose the model via REST API
+- **Scheduled Jobs:** Automate retraining on a schedule with Databricks Jobs & Pipelines
+- **Monitoring:** Track model performance over time with Databricks Lakehouse Monitoring
