@@ -4,7 +4,9 @@
 # MAGIC
 # MAGIC This notebook trains a **Decision Tree Classifier** for credit card fraud detection,
 # MAGIC tunes hyperparameters with **5-fold cross-validation**, handles class imbalance
-# MAGIC with **SMOTE**, and registers the best model in the **Azure Databricks MLflow** registry.
+# MAGIC with **SMOTE**, and registers the best model in the **Databricks MLflow** registry.
+# MAGIC
+# MAGIC > **Compatible with Databricks Community Edition (free tier).**
 # MAGIC
 # MAGIC **Steps:**
 # MAGIC 1. Load and explore the dataset
@@ -18,7 +20,11 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 1. Imports & Configuration
+# MAGIC ## 1. Install Dependencies & Imports
+
+# COMMAND ----------
+
+# MAGIC %pip install scikit-learn==1.4.0 imbalanced-learn==0.12.3
 
 # COMMAND ----------
 
@@ -48,19 +54,19 @@ warnings.filterwarnings("ignore")
 # MAGIC %md
 # MAGIC ## 2. Load Dataset
 # MAGIC
-# MAGIC Upload `fraud_data.csv` to your Databricks workspace or DBFS before running this cell.
-# MAGIC Update the path below if your file is in a different location.
+# MAGIC Upload `fraud_data.csv` to DBFS via the Databricks UI before running this cell.
+# MAGIC
+# MAGIC **How to upload (Community Edition):**
+# MAGIC 1. Click **Data** in the sidebar → **Create Table** → **Upload File**
+# MAGIC 2. Upload `fraud_data.csv` — it will be stored at `/FileStore/tables/fraud_data.csv`
 
 # COMMAND ----------
 
-# Option A: Load from workspace files
-# df = pd.read_csv("/Workspace/Users/<your-email>/fraud_data.csv")
+# Community Edition: load from DBFS (uploaded via UI)
+df = pd.read_csv("/dbfs/FileStore/tables/fraud_data.csv")
 
-# Option B: Load from DBFS
-# df = pd.read_csv("/dbfs/FileStore/tables/fraud_data.csv")
-
-# Option C: Load from the cloned Git folder (if imported via Git Folder)
-df = pd.read_csv("fraud_data.csv")
+# Alternative: if using full Databricks with Git Folders
+# df = pd.read_csv("fraud_data.csv")
 
 print(f"Dataset shape: {df.shape}")
 print(f"Columns: {list(df.columns)}")
