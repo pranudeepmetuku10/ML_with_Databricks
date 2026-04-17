@@ -1,4 +1,4 @@
-# 🚀 ML with Databricks
+# ML with Databricks
 
 <div align="center">
 
@@ -15,14 +15,14 @@
 
 ---
 
-## 📋 Navigation
+## Navigation
 
-| [Overview](#-overview) | [Quick Start](#-quick-start) | [Architecture](#-architecture) | [Tech Stack](#-tech-stack) | [Project Structure](#-project-structure) | [License](#-license) |
+| [Overview](#overview) | [Quick Start](#quick-start) | [Architecture](#architecture) | [Tech Stack](#tech-stack) | [Project Structure](#project-structure) | [License](#license) |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 
 ---
 
-## 📖 Overview
+## Overview
 
 This project provides a **production-ready ML pipeline** for credit card fraud detection on Databricks.
 
@@ -34,18 +34,18 @@ Data Loading → Preprocessing → SMOTE → Model Training → 5-Fold CV → ML
 
 ### What You'll Learn
 
-- ✅ Set up Databricks Free Edition (no credit card required)
-- ✅ Build a fraud classifier with scikit-learn
-- ✅ Handle imbalanced data with SMOTE
-- ✅ Tune hyperparameters with cross-validation
-- ✅ Track experiments and metrics with MLflow
-- ✅ Register models for production
+- Set up Databricks Free Edition (no credit card required)
+- Build a fraud classifier with scikit-learn
+- Handle imbalanced data with SMOTE
+- Tune hyperparameters with cross-validation
+- Track experiments and metrics with MLflow
+- Register models for production
 
 ---
 
-## 🎯 Quick Start
+## Quick Start
 
-### 1️⃣ Sign Up for Databricks
+### 1. Sign Up for Databricks
 
 ```bash
 Visit → https://www.databricks.com/try-databricks
@@ -53,7 +53,7 @@ Sign up with your work/university email
 Activate Free Edition (no credit card needed!)
 ```
 
-### 2️⃣ Create a Compute Cluster
+### 2. Create a Compute Cluster
 
 | Setting | Value |
 |---------|-------|
@@ -62,7 +62,7 @@ Activate Free Edition (no credit card needed!)
 | **Runtime** | 14.3 LTS |
 | **Time** | ~3–5 min startup |
 
-### 3️⃣ Get the Code
+### 3. Get the Code
 
 **Option A: GitHub (Recommended)**
 ```bash
@@ -74,14 +74,14 @@ Databricks Home → Connect to GitHub → Select this repo
 Workspace → Import → Upload notebooks/credit_card_fraud_training.py
 ```
 
-### 4️⃣ Download Dataset
+### 4. Download Dataset
 
 ```bash
 Kaggle → neharoychoudhury/credit-card-fraud-data
 Upload to Databricks (DBFS or workspace)
 ```
 
-### 5️⃣ Run the Notebook
+### 5. Run the Notebook
 
 ```python
 # Opens: notebooks/credit_card_fraud_training.py
@@ -89,23 +89,23 @@ Upload to Databricks (DBFS or workspace)
 # Execute: All cells in order
 ```
 
-✨ **Done!** Your model will be registered in MLflow Model Registry
+**Done!** Your model will be registered in MLflow Model Registry
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃  Databricks Free Edition Workspace                 ┃
 ┃                                                    ┃
 ┃  ┌────────────────────────────────────┐           ┃
-┃  │ 🖥️  Compute Cluster (Single Node)  │           ┃
-┃  │    Runtime: 14.3 LTS               │           ┃
+┃  │ Compute Cluster (Single Node)      │           ┃
+┃  │ Runtime: 14.3 LTS                  │           ┃
 ┃  └──────────────┬───────────────────┘            ┃
 ┃                 │                                 ┃
 ┃  ┌──────────────▼────────────────────┐           ┃
-┃  │ 📓 Databricks Notebook             │           ┃
+┃  │ Databricks Notebook                │           ┃
 ┃  │                                    │           ┃
 ┃  │  ├─ Load Data (DBFS)               │           ┃
 ┃  │  ├─ Preprocess & SMOTE             │           ┃
@@ -117,11 +117,11 @@ Upload to Databricks (DBFS or workspace)
 ┃  └──────────────┬───────────────────┘            ┃
 ┃                 │                                 ┃
 ┃  ┌──────────────▼────────────────────┐           ┃
-┃  │ 📊 MLflow Model Registry           │           ┃
+┃  │ MLflow Model Registry              │           ┃
 ┃  │                                    │           ┃
-┃  │  🏆 Model: fraud-classifier       │           ┃
-┃  │     Version: 1, 2, 3, ...          │           ┃
-┃  │     Status: Production             │           ┃
+┃  │ Model: fraud-classifier            │           ┃
+┃  │ Version: 1, 2, 3, ...              │           ┃
+┃  │ Status: Production                 │           ┃
 ┃  │                                    │           ┃
 ┃  └────────────────────────────────────┘           ┃
 ┃                                                    ┃
@@ -130,7 +130,7 @@ Upload to Databricks (DBFS or workspace)
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology | Version |
 |----------|-----------|---------|
@@ -145,11 +145,11 @@ Upload to Databricks (DBFS or workspace)
 
 ---
 
-## 📝 Detailed Setup
+## Detailed Setup
 
 ### Step 1: Sign Up & Login
 
-See [📖 docs/01-sign-up-and-login.md](docs/01-sign-up-and-login.md)
+See [docs/01-sign-up-and-login.md](docs/01-sign-up-and-login.md)
 
 1. Visit [https://www.databricks.com/try-databricks](https://www.databricks.com/try-databricks)
 2. Sign up with your university or work email → **Free Edition**
@@ -157,7 +157,7 @@ See [📖 docs/01-sign-up-and-login.md](docs/01-sign-up-and-login.md)
 
 ### Step 2: Create a Compute Cluster
 
-See [📖 docs/02-create-cluster.md](docs/02-create-cluster.md)
+See [docs/02-create-cluster.md](docs/02-create-cluster.md)
 
 1. Sidebar → **Compute** → **Create Compute**
 2. Configure:
@@ -189,7 +189,7 @@ See [📖 docs/02-create-cluster.md](docs/02-create-cluster.md)
 2. Top dropdown → attach to `ml-fraud-cluster`
 3. Execute all cells in order
 
-✨ The notebook will:
+The notebook will:
 - Load and preprocess the fraud dataset
 - Apply SMOTE to fix class imbalance
 - Run 5-fold CV grid search over decision tree hyperparams
@@ -198,7 +198,7 @@ See [📖 docs/02-create-cluster.md](docs/02-create-cluster.md)
 
 ---
 
-## 📊 Model Registration & Tracking
+## Model Registration & Tracking
 
 ### View Registered Models
 
@@ -219,30 +219,30 @@ See [📖 docs/02-create-cluster.md](docs/02-create-cluster.md)
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ML_with_Databricks/
-├── 📖 README.md                          ← You are here
-├── 📜 LICENSE                            Apache 2.0
-├── 📋 requirements.txt                   Python dependencies
-├── .gitignore                            Git rules
+├── README.md                            ← You are here
+├── LICENSE                              Apache 2.0
+├── requirements.txt                     Python dependencies
+├── .gitignore                           Git rules
 │
-├── 📓 notebooks/
-│   └── credit_card_fraud_training.py    Main Databricks notebook
+├── notebooks/
+│   └── credit_card_fraud_training.py   Main Databricks notebook
 │
-├── 🔧 scripts/
-│   └── register_model.py                Standalone registration tool
+├── scripts/
+│   └── register_model.py               Standalone registration tool
 │
-└── 📚 docs/
-    ├── 01-sign-up-and-login.md          Databricks account setup
-    ├── 02-create-cluster.md             Cluster configuration guide
+└── docs/
+    ├── 01-sign-up-and-login.md         Databricks account setup
+    ├── 02-create-cluster.md            Cluster configuration guide
     └── 03-model-tracking-walkthrough.md MLflow tracking walkthrough
 ```
 
 ---
 
-## 📦 Dataset
+## Dataset
 
 The model trains on the [Kaggle Credit Card Fraud Dataset](https://www.kaggle.com/datasets/neharoychoudhury/credit-card-fraud-data).
 
@@ -255,7 +255,7 @@ The model trains on the [Kaggle Credit Card Fraud Dataset](https://www.kaggle.co
 
 ---
 
-## 🚀 Next Steps
+## Next Steps
 
 | Objective | Description |
 |-----------|-------------|
@@ -266,7 +266,7 @@ The model trains on the [Kaggle Credit Card Fraud Dataset](https://www.kaggle.co
 
 ---
 
-## 📚 References
+## References
 
 - [Databricks Free Edition](https://www.databricks.com/try-databricks)
 - [Databricks Documentation](https://docs.databricks.com/)
@@ -276,12 +276,12 @@ The model trains on the [Kaggle Credit Card Fraud Dataset](https://www.kaggle.co
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [Apache License 2.0](LICENSE).
 
 <div align="center">
 
-**Made with 💙 for the Databricks community**
+**Made for the Databricks community**
 
 </div>
