@@ -1,100 +1,142 @@
-# Train and Deploy ML Model on Databricks
+# 🚀 ML with Databricks
 
-End-to-end guide for training a machine learning model in **Databricks Free Edition** and registering it to the **MLflow** model registry.
+<div align="center">
 
-> **Use Case:** Credit card fraud detection using a decision-tree classifier with hyperparameter tuning via 5-fold cross-validation.
+**Train and Deploy Credit Card Fraud Detection on Databricks**
 
----
+![Databricks](https://img.shields.io/badge/Databricks-Free%20Edition-0078D4?style=flat-square&logo=databricks)
+![MLflow](https://img.shields.io/badge/MLflow-Model%20Registry-00aaff?style=flat-square&logo=mlflow)
+![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat-square&logo=python)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4.0-f7931e?style=flat-square&logo=scikit-learn)
 
-## Table of Contents
+> End-to-end machine learning pipeline with **hyperparameter tuning**, **class imbalance handling**, and **model tracking** • **100% Free Edition** • No credit card needed
 
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Setup Guide](#setup-guide)
-  - [1. Sign Up / Log In](#1-sign-up--log-in)
-  - [2. Create a Compute Cluster](#2-create-a-compute-cluster)
-  - [3. Upload the Dataset](#3-upload-the-dataset)
-  - [4. Import the Notebook](#4-import-the-notebook)
-- [Training the Model](#training-the-model)
-  - [Import the Notebook](#import-the-notebook)
-  - [Run the Notebook](#run-the-notebook)
-- [Model Registration & Tracking](#model-registration--tracking)
-  - [Registered Models](#registered-models)
-  - [Experiments & Runs](#experiments--runs)
-- [Project Structure](#project-structure)
-- [Dataset](#dataset)
-- [Next Steps](#next-steps)
-- [References](#references)
-- [License](#license)
+</div>
 
 ---
 
-## Overview
+### 📋 Quick Navigation
 
-This project demonstrates how to:
+<table>
+<tr>
+  <td><a href="#-overview">Overview</a></td>
+  <td><a href="#-quick-start">Quick Start</a></td>
+  <td><a href="#-architecture">Architecture</a></td>
+  <td><a href="#-tech-stack">Tech Stack</a></td>
+  <td><a href="#-license">License</a></td>
+</tr>
+</table>
 
-1. **Set up** a Databricks Free Edition workspace (no credit card needed)
-2. **Train** a decision-tree fraud classifier with scikit-learn inside a Databricks notebook
-3. **Tune** hyperparameters using 5-fold cross-validation
-4. **Handle class imbalance** with `imbalanced-learn` (SMOTE)
-5. **Track** experiments, parameters, and metrics with MLflow
-6. **Register** the trained model in the MLflow Model Registry
 
 ---
 
-## Architecture
+## 📖 Overview
+
+This project provides a **production-ready ML pipeline** for credit card fraud detection on Databricks.
+
+### What You'll Do
 
 ```
-┌──────────────────────────────────────────────────────┐
-│          Databricks Free Edition                      │
-│                                                      │
-│  ┌────────────────────────┐                          │
-│  │   Compute Cluster       │                          │
-│  │   (Single Node)         │                          │
-│  └──────────┬─────────────┘                          │
-│             │                                        │
-│  ┌──────────▼─────────────┐                          │
-│  │  Notebook               │                          │
-│  │  - %pip install deps    │                          │
-│  │  - Load Dataset (DBFS)  │                          │
-│  │  - Preprocess (SMOTE)   │                          │
-│  │  - Train (DecisionTree) │                          │
-│  │  - 5-Fold CV Tuning     │                          │
-│  │  - Log to MLflow        │                          │
-│  └──────────┬─────────────┘                          │
-│             │                                        │
-│  ┌──────────▼─────────────┐                          │
-│  │  MLflow Model Registry  │                          │
-│  │  "credit-card-fraud-    │                          │
-│  │   classifier"           │                          │
-│  └────────────────────────┘                          │
-└──────────────────────────────────────────────────────┘
+Data Loading → Preprocessing → SMOTE → Model Training → 5-Fold CV → MLflow Tracking → Model Registry
+```
+
+### What You'll Learn
+
+- ✅ Set up Databricks Free Edition (no credit card required)
+- ✅ Build a fraud classifier with scikit-learn
+- ✅ Handle imbalanced data with SMOTE
+- ✅ Tune hyperparameters with cross-validation
+- ✅ Track experiments and metrics with MLflow
+- ✅ Register models for production
+
+---
+
+## 🎯 Quick Start
+
+### 1️⃣ Sign Up for Databricks
+
+```bash
+Visit → https://www.databricks.com/try-databricks
+Sign up with your work/university email
+Activate Free Edition (no credit card needed!)
+```
+
+### 2️⃣ Create a Compute Cluster
+
+| Setting | Value |
+|---------|-------|
+| **Cluster Name** | `ml-fraud-cluster` |
+| **Mode** | Single Node |
+| **Runtime** | 14.3 LTS |
+| **Time** | ~3–5 min startup |
+
+### 3️⃣ Get the Code
+
+**Option A: GitHub (Recommended)**
+```bash
+Databricks Home → Connect to GitHub → Select this repo
+```
+
+**Option B: Manual Import**
+```bash
+Workspace → Import → Upload notebooks/credit_card_fraud_training.py
+```
+
+### 4️⃣ Download Dataset
+
+```bash
+Kaggle → neharoychoudhury/credit-card-fraud-data
+Upload to Databricks (DBFS or workspace)
+```
+
+### 5️⃣ Run the Notebook
+
+```python
+# Opens: notebooks/credit_card_fraud_training.py
+# Attach to: ml-fraud-cluster
+# Execute: All cells in order
+```
+
+✨ **Done!** Your model will be registered in MLflow Model Registry
+
+## 🏗️ Architecture
+
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  Databricks Free Edition Workspace                 ┃
+┃                                                    ┃
+┃  ┌────────────────────────────────────┐           ┃
+┃  │ 🖥️  Compute Cluster (Single Node)  │           ┃
+┃  │    Runtime: 14.3 LTS               │           ┃
+┃  └──────────────┬───────────────────┘            ┃
+┃                 │                                 ┃
+┃  ┌──────────────▼────────────────────┐           ┃
+┃  │ 📓 Databricks Notebook             │           ┃
+┃  │                                    │           ┃
+┃  │  ├─ Load Data (DBFS)               │           ┃
+┃  │  ├─ Preprocess & SMOTE             │           ┃
+┃  │  ├─ Train DecisionTree Classifier  │           ┃
+┃  │  ├─ 5-Fold Cross-Validation        │           ┃
+┃  │  ├─ Hyperparameter Tuning          │           ┃
+┃  │  └─ Log Metrics to MLflow          │           ┃
+┃  │                                    │           ┃
+┃  └──────────────┬───────────────────┘            ┃
+┃                 │                                 ┃
+┃  ┌──────────────▼────────────────────┐           ┃
+┃  │ 📊 MLflow Model Registry           │           ┃
+┃  │                                    │           ┃
+┃  │  🏆 Model: fraud-classifier       │           ┃
+┃  │     Version: 1, 2, 3, ...          │           ┃
+┃  │     Status: Production             │           ┃
+┃  │                                    │           ┃
+┃  └────────────────────────────────────┘           ┃
+┃                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
 ---
 
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Platform | Databricks Free Edition |
-| ML Tracking & Registry | MLflow (built-in) |
-| Catalog | Unity Catalog |
-| ML Framework | scikit-learn 1.4.0 |
-| Data Processing | pandas 2.2.2 |
-| Class Imbalance | imbalanced-learn 0.12.3 |
-| Language | Python 3.10+ |
-| Notebook Runtime | Databricks Runtime 14.3 LTS |
-
----
-
-## Prerequisites
-
-- A **Databricks** account (Free Edition works — sign up with your university/work email)
-- Basic familiarity with Jupyter notebooks and Python ML workflows
-- **No paid cloud subscription or credit card required**
+## 🛠️ Tech Stack
 
 ---
 
